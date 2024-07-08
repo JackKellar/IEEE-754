@@ -44,7 +44,7 @@ puts("");
 unsigned int exp = 0xff;
 //Bitwise ANDing the exponent mask to our integer allows us to get the value of it.
 //We shift k RIGHT 23 bits so we don't need to loop at all or shift more than once.
-//Say E are our exponent bits and the dashes are the entire 32bit integer, what we're doing looks like this:
+//Say E are our exponent bits and the dashes (-) are the entire 32bit integer, what we're doing looks like this:
 //-EEEEEEEE------------------------ shift RIGHT 23 bits
 //-------------------------EEEEEEEE 
 //-------------------------11111111 <- our 8bit mask
@@ -53,9 +53,16 @@ puts("");
 
 //This mask allows us to show the value of our mantissa/fraction portion. F in HEX gives us 4 bits. We need 23. 
 unsigned int mask = 0x7fffff;
+//IEEE-754 uses the following formula: (-1)^S x  (1 + fraction) x 2^(exponent - bias)
+//S = Sign bit
+//Fraction = Fraction portion
+//Exponent = Exponent portion
+//Bias = 127
+//The mantissa (also known as significand or fraction) is stored in bits 1-23. An invisible leading bit (i.e. it is not actually stored) with value 1.0 is placed in front 
 float mantissa = 1.0;
 int FractionBits = mask & k;
-
+//then bit 23 has a value of 1/2, bit 22 has value 1/4 etc. As a result, the mantissa has a value between 1.0 and 2. 
+//If the exponent reaches -127 (binary 00000000), the leading 1 is no longer used to enable gradual underflow.
 for(int i=22; i>0; i--){
     unsigned int FractionMask = 1<<i;
     int check = FractionMask & FractionBits;
