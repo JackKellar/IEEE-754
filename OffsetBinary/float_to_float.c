@@ -51,11 +51,11 @@ unsigned int exp = 0xff;
 printf("Exponent value: %d", exp & k>>23);
 puts("");
 
-//This mask allows us to show the value of our mantissa/fraction portion. F in HEX gives us 4 bits. We need 23. 
+//This mask allows us to show the value of our mantissa portion. F in HEX gives us 4 bits. We need 23. 
 unsigned int mask = 0x7fffff;
-//IEEE-754 uses the following formula: (-1)^S x  (1 + fraction) x 2^(exponent - bias)
+//IEEE-754 uses the following formula: (-1)^S x  (1 + mantissa) x 2^(exponent - bias)
 //S = Sign bit
-//Fraction = Fraction portion
+//Mantissa = Mantissa portion
 //Exponent = Exponent portion
 //Bias = 127
 //The mantissa is stored in bits 1-23. An invisible leading bit (i.e. it is not actually stored) with value 1.0 is placed in front 
