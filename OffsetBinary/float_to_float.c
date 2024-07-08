@@ -15,26 +15,43 @@ puts("any float: ");
 
 scanf("%f", &number);
 
+//A void pointer allows us to assign it to the float without the compiler complaining about type
 void* ptr = (void*)malloc(sizeof(unsigned int));
+//Explicit casting a float pointer and dereferencing it
 *(float*)ptr = number;
 
+//Assigning the value of our pointer to this integer and explicit casting it to an integer
 unsigned int k = *(unsigned int*)ptr;
+//This is a 32bit integer with a sign bit (most significant bit), an exponent portion (next 8 bits) and a mantissa portion (next 23 bits).
+//Shifting 1 LEFT 31 bits and bitwise ANDing to k gives us the sign bit.
 printf("%u", (1<<31 & k) != 0);
 printf(" ");
 
+//For the exponent portion, we want the next 8 bits past the sign bit. 31-8 = 23.
+//We shift RIGHT and bitwise AND for the exponent portion until we reach the 23rd bit.
 for(unsigned int i = 1<<30; i>1<<22; i>>=1){
     printf("%u", (i & k) != 0);
 }
 printf(" ");
 
+//The same happens for the mantissa portion. Shifting LEFT 0 times is unnecessary. It is only there for clarity.
 for(unsigned int i = 1<<22; i>0<<0; i>>=1){
     printf("%u", (i & k) != 0);
 }
 puts("");
+
+//This mask allows us to show the value of our exponent portion. F in HEX gives us 4 bits. We need 8 for the exponent portion.
 unsigned int exp = 0xff;
+//Bitwise ANDing the exponent mask to our integer allows us to get the value of it.
+//We shift k RIGHT 23 bits so we don't need to loop at all or shift more than once.
+//Say E are our exponent bits and the dashes are the entire 32bit integer, what we're doing looks like this:
+//-EEEEEEEE------------------------ shift RIGHT 23 bits
+//-------------------------EEEEEEEE 
+//-------------------------11111111 <- our 8bit mask
 printf("Exponent value: %d", exp & k>>23);
 puts("");
 
+//This mask allows us to show the value of our mantissa/fraction portion. F in HEX gives us 4 bits. We need 23. 
 unsigned int mask = 0x7fffff;
 float mantissa = 1.0;
 int FractionBits = mask & k;
