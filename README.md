@@ -7,3 +7,5 @@ A technical standard for floating point arithmetic. It defines the following:
 * rounding rules: properties to be satisfied when rounding numbers during arithmetic and conversions.
 * operations: arithmetic and other operations (such as trigonometric functions) on arithmetic formats.
 * exception handling: indications of exceptional conditions (such as division by zero, overflow, etc.)
+
+The point of this repository is for me to explore all that I can of IEEE-754 using C.
