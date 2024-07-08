@@ -58,7 +58,7 @@ unsigned int mask = 0x7fffff;
 //Fraction = Fraction portion
 //Exponent = Exponent portion
 //Bias = 127
-//The mantissa (also known as significand or fraction) is stored in bits 1-23. An invisible leading bit (i.e. it is not actually stored) with value 1.0 is placed in front 
+//The mantissa is stored in bits 1-23. An invisible leading bit (i.e. it is not actually stored) with value 1.0 is placed in front 
 float mantissa = 1.0;
 int FractionBits = mask & k;
 //then bit 23 has a value of 1/2, bit 22 has value 1/4 etc. As a result, the mantissa has a value between 1.0 and 2. 
