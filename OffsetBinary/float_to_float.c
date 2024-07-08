@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//IEEE 754 uses offset notation for the exponent part in each of its various formats of precision. 
+//Unusually however, instead of using "excess 2^n−1" it uses "excess 2^(n−1) − 1" (i.e. excess-15, excess-127, excess-1023, excess-16383) 
+//This means that inverting the leading (high-order) bit of the exponent will not convert the exponent to correct two's complement notation.
+
+//This program takes any float number and prints it as it's binary string without converting anything.
+//It also shows the values of the mantissa and exponent components.
+
 int main(){
 float number;
 
